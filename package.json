@@ -1,0 +1,21 @@
+{
+  "name": "linkcord",
+  "version": "1.0.0",
+  "description": "Discord bot for Discord hack week.",
+  "main": "./src/index.js",
+  "repository": "https://github.com/OverMighty/linkcord",
+  "author": "OverMighty",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "discord-akairo": "discord-akairo/discord-akairo",
+    "discord.js": "discordjs/discord.js",
+    "dotenv": "^8.0.0",
+    "pg": "^7.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.10",
+    "eslint": "^6.0.1",
+    "eslint-config-aqua": "^6.0.0"
+  }
+}

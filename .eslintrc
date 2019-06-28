@@ -1,0 +1,7 @@
+{
+    "extends": "aqua/node",
+    "rules": {
+        "indent": ["error", 4],
+        "padded-blocks": ["error", { "classes": "always" }]
+    }
+}
