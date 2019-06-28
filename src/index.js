@@ -10,4 +10,4 @@ process.on('unhandledRejection', err => {
     console.error('[Unhandled Rejection]', err.stack);
 });
 
-client.login(process.env.BOT_TOKEN);
+client.login();
