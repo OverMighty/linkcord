@@ -9,8 +9,6 @@ class LinkcordClient extends AkairoClient {
 
     constructor() {
         super({
-            ownerID: process.env.BOT_OWNER_ID
-        }, {
             disabledEvents: ['TYPING_START'],
             disableEveryone: true
         });
