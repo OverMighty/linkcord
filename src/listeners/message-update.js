@@ -1,5 +1,4 @@
 const { Listener } = require('discord-akairo');
-
 const { embeds } = require('../utils');
 
 class MessageUpdateListener extends Listener {
@@ -12,24 +11,18 @@ class MessageUpdateListener extends Listener {
     }
 
     async exec(oldMessage, newMessage) {
-        if (!oldMessage.mirror) {
-            return;
-        }
-
+        if (!oldMessage.mirror) return;
         if (!oldMessage.channel.linkData) {
             try {
                 await this.client.linkManager.cacheChannelLinkData(oldMessage.channel);
-            } catch (err) {
-                console.error(err.stack);
+            } catch (error) {
+                console.error(error.stack);
                 return oldMessage.channel.send(embeds.unexpectedError);
             }
         }
 
         const { linkData } = oldMessage.channel;
-
-        if (!linkData.linked) {
-            return;
-        }
+        if (!linkData.linked) return;
 
         newMessage.mirror = await linkData.mirrorWebhook.send(newMessage.content, {
             username: `${oldMessage.author.tag} (edited)`,

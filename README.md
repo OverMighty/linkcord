@@ -22,7 +22,6 @@ webhooks, but will ignore messages sent by bots.
 #### Requirements
 
 - [Node.js](https://nodejs.org/en/)
-- [Yarn](https://yarnpkg.com/en/) or [npm](https://www.npmjs.com/get-npm)
 - [PostgreSQL](https://www.postgresql.org/)
 
 #### Hosting the bot

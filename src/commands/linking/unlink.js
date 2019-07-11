@@ -1,6 +1,5 @@
 const { MessageEmbed } = require('discord.js');
 const { Command } = require('discord-akairo');
-
 const { colors, embeds } = require('../../utils');
 
 class UnlinkCommand extends Command {
@@ -8,8 +7,7 @@ class UnlinkCommand extends Command {
     constructor() {
         super('unlink', {
             aliases: ['unlink'],
-            description: 'Unlinks the guild channel if it is linked or removes it from the link ' +
-                ' queue if it is queued for linking.',
+            description: 'Unlinks the guild channel if it is linked or removes it from the link queue if it is queued for linking.',
             category: 'linking',
             userPermissions: 'MANAGE_GUILD',
             clientPermissions: 'MANAGE_WEBHOOKS'
@@ -20,8 +18,8 @@ class UnlinkCommand extends Command {
         if (!message.channel.linkData) {
             try {
                 await this.client.linkManager.cacheChannelLinkData(message.channel);
-            } catch (err) {
-                console.error(err.stack);
+            } catch (error) {
+                console.error(error.stack);
                 return message.channel.send(embeds.unexpectedError);
             }
         }
@@ -46,8 +44,8 @@ class UnlinkCommand extends Command {
 
                     channel.send(embed);
                 }
-            } catch (err) {
-                console.error(err.stack);
+            } catch (error) {
+                console.error(error.stack);
                 message.channel.send(embeds.unexpectedError);
                 linkedTo.send(embeds.unexpectedError);
             }
@@ -68,7 +66,7 @@ class UnlinkCommand extends Command {
             .setTitle('This channel has been removed from the link queue!')
             .setDescription(`Type \`${this.handler.prefix}link\` to add it back.`);
 
-        message.channel.send(embed);
+        message.util.send(embed);
     }
 
 }

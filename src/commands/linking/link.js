@@ -1,9 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { Command } = require('discord-akairo');
-
 const { colors, embeds } = require('../../utils');
-
-const MAX_WEBHOOKS_PER_CHANNEL = 10;
 
 class LinkCommand extends Command {
 
@@ -21,8 +18,8 @@ class LinkCommand extends Command {
         if (!message.channel.linkData) {
             try {
                 await this.client.linkManager.cacheChannelLinkData(message.channel);
-            } catch (err) {
-                console.error(err.stack);
+            } catch (error) {
+                console.error(error.stack);
                 return message.channel.send(embeds.unexpectedError);
             }
         }
@@ -35,13 +32,11 @@ class LinkCommand extends Command {
         }
 
         const channelWebhooks = await message.channel.fetchWebhooks();
-
-        if (channelWebhooks.size >= MAX_WEBHOOKS_PER_CHANNEL) {
+        if (channelWebhooks.size >= 10) {
             return message.util.reply('this channel has too many webhooks, I cannot link it.');
         }
 
         const { queuedChannel } = this.client;
-
         if (queuedChannel) {
             if (queuedChannel.id === message.channel.id) {
                 return message.util.reply('this channel is already queued for linking!');
@@ -70,8 +65,8 @@ class LinkCommand extends Command {
 
                     channel.send(embed);
                 }
-            } catch (err) {
-                console.error(err.stack);
+            } catch (error) {
+                console.error(error.stack);
                 queuedChannel.send(embeds.unexpectedError);
                 message.channel.send(embeds.unexpectedError);
             }
@@ -86,7 +81,7 @@ class LinkCommand extends Command {
             .setTitle('This channel has been added to the link queue!')
             .setDescription(`Type \`${this.handler.prefix}unlink\` to undo.`);
 
-        message.channel.send(embed);
+        message.util.send(embed);
     }
 
 }

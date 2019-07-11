@@ -1,20 +1,18 @@
-const fs = require('fs');
-
+const { readFileSync } = require('fs');
 const { AkairoClient, CommandHandler, ListenerHandler } = require('discord-akairo');
 const { Client } = require('pg');
-
 const LinkManager = require('./link-manager');
 
 class LinkcordClient extends AkairoClient {
 
     constructor() {
-        super({
+        super({ ownerID: '<id>' }, {
             disabledEvents: ['TYPING_START'],
             disableEveryone: true
         });
 
         this.commandHandler = new CommandHandler(this, {
-            directory: './src/commands/',
+            directory: 'src/commands/',
             prefix: process.env.BOT_PREFIX,
             commandUtil: true,
             allowMention: true,
@@ -22,7 +20,7 @@ class LinkcordClient extends AkairoClient {
         });
 
         this.listenerHandler = new ListenerHandler(this, {
-            directory: './src/listeners/'
+            directory: 'src/listeners/'
         });
 
         this.db = new Client();
@@ -30,26 +28,20 @@ class LinkcordClient extends AkairoClient {
     }
 
     async login(token) {
-        this.loadModules();
-        await this.initDB();
-        super.login(token);
-    }
+        try {
+            await this.db.connect();
+            const initQuery = readFileSync('src/init.sql', 'utf8');
+            await this.db.query(initQuery);
+        } catch (error) {
+            console.error(error.stack);
+            process.exit(1);
+        }
 
-    loadModules() {
         this.commandHandler.useListenerHandler(this.listenerHandler);
         this.commandHandler.loadAll();
         this.listenerHandler.loadAll();
-    }
 
-    async initDB() {
-        try {
-            await this.db.connect();
-            const initQuery = fs.readFileSync('./src/init.sql', 'utf8');
-            await this.db.query(initQuery);
-        } catch (err) {
-            console.error(err.stack);
-            process.exit(1);
-        }
+        return super.login(token);
     }
 
 }

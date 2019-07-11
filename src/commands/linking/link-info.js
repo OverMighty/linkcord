@@ -1,6 +1,5 @@
 const { MessageEmbed } = require('discord.js');
 const { Command } = require('discord-akairo');
-
 const { colors, embeds } = require('../../utils');
 
 class LinkInfoCommand extends Command {
@@ -17,15 +16,13 @@ class LinkInfoCommand extends Command {
         if (!message.channel.linkData) {
             try {
                 await this.client.linkManager.cacheChannelLinkData(message.channel);
-            } catch (err) {
-                console.error(err.stack);
+            } catch (error) {
+                console.error(error.stack);
                 return message.channel.send(embeds.unexpectedError);
             }
         }
 
-        if (!message.channel.linkData.linked) {
-            return message.reply('this channel is currently not linked with another channel');
-        }
+        if (!message.channel.linkData.linked) return message.util.send('this channel is currently not linked with another channel');
 
         const { linkedTo } = message.channel.linkData;
 
@@ -41,7 +38,7 @@ class LinkInfoCommand extends Command {
                 `**Channel:** ${linkedTo.id}`
             ]);
 
-        message.channel.send(embed);
+        message.util.send(embed);
     }
 
 }

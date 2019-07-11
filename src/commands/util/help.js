@@ -1,6 +1,5 @@
 const { MessageEmbed } = require('discord.js');
 const { Command } = require('discord-akairo');
-
 const { colors } = require('../../utils');
 
 class HelpCommand extends Command {

@@ -1,5 +1,4 @@
 const { Listener } = require('discord-akairo');
-
 const { embeds } = require('../utils');
 
 class MessageListener extends Listener {
@@ -19,8 +18,8 @@ class MessageListener extends Listener {
         if (!message.channel.linkData) {
             try {
                 await this.client.linkManager.cacheChannelLinkData(message.channel);
-            } catch (err) {
-                console.error(err.stack);
+            } catch (error) {
+                console.error(error.stack);
                 return message.channel.send(embeds.unexpectedError);
             }
         }

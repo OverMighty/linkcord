@@ -10,9 +10,7 @@ class MessageDeleteListener extends Listener {
     }
 
     async exec(message) {
-        if (message.mirror) {
-            message.mirror.delete();
-        }
+        if (message.mirror) message.mirror.delete();
     }
 
 }
