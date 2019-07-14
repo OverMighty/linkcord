@@ -41,7 +41,7 @@ class LinkInfoCommand extends Command {
                 `**Channel:** ${linkedTo.id}`
             ]);
 
-        message.channel.send(embed);
+        message.util.send(embed);
     }
 
 }
