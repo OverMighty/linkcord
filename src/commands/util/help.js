@@ -48,7 +48,7 @@ class HelpCommand extends Command {
         for (const category of this.handler.categories.values()) {
             const commands = [];
 
-            for (const [commandID] of category) {
+            for (const commandID of category.keys()) {
                 commands.push(commandID);
             }
 
