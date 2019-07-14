@@ -24,7 +24,7 @@ class LinkInfoCommand extends Command {
         }
 
         if (!message.channel.linkData.linked) {
-            return message.reply('this channel is currently not linked with another channel');
+            return message.reply('this channel is currently not linked with another channel.');
         }
 
         const { linkedTo } = message.channel.linkData;
